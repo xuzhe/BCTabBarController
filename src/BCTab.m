@@ -4,30 +4,30 @@
 @property (nonatomic, retain) UIImage *rightBorder;
 @property (nonatomic, retain) UIImage *background;
 @property (nonatomic, retain) NSString *imageName;
+@property (nonatomic, retain) NSString *selectedImageNameSuffix;
+@property (nonatomic, retain) NSString *landscapeImageNameSuffix;
 @end
 
 @implementation BCTab
-@synthesize rightBorder, background, imageName;
+@synthesize rightBorder, background, imageName, selectedImageNameSuffix, landscapeImageNameSuffix;
 
-- (void) assignImages: (NSString *) _imageName  {
-  NSString *selectedName = [NSString stringWithFormat:@"%@-selected.%@",
-								   [_imageName stringByDeletingPathExtension],
-								   [_imageName pathExtension]];
-		
-		[self setImage:[UIImage imageNamed:_imageName] forState:UIControlStateNormal];
-		[self setImage:[UIImage imageNamed:selectedName] forState:UIControlStateSelected];
-
+- (void)assignImages:(NSString *)_imageName selectedImageNameSuffix:(NSString *)_selectedSuffix {
+    NSString *selctedImageName = [[[_imageName stringByDeletingPathExtension] stringByAppendingString:_selectedSuffix] stringByAppendingPathExtension:[_imageName pathExtension]];
+    [self setImage:[UIImage imageNamed:_imageName] forState:UIControlStateNormal];
+    [self setImage:[UIImage imageNamed:selctedImageName] forState:UIControlStateSelected];
 }
-- (id)initWithIconImageName:(NSString *)_imageName {
-	if ((self = [super init])) {
+
+- (id)initWithIconImageName:(NSString *)_imageName selectedImageNameSuffix:(NSString *)_selectedSuffix landscapeImageNameSuffix:(NSString *)_landscapeSuffi {
+    if ((self = [super init])) {
 		self.adjustsImageWhenHighlighted = NO;
 		self.background = [UIImage imageNamed:@"BCTabBarController.bundle/tab-background.png"];
 		self.rightBorder = [UIImage imageNamed:@"BCTabBarController.bundle/tab-right-border.png"];
 		self.backgroundColor = [UIColor clearColor];
 		
-		[self assignImages: _imageName];
+		[self assignImages:_imageName selectedImageNameSuffix:_selectedSuffix];
         self.imageName = _imageName;
-
+        self.selectedImageNameSuffix = _selectedSuffix;
+        self.landscapeImageNameSuffix = _landscapeSuffi;
 	}
 	return self;
 }
@@ -36,6 +36,8 @@
 	self.rightBorder = nil;
 	self.background = nil;
     self.imageName = nil;
+    self.selectedImageNameSuffix = nil;
+    self.landscapeImageNameSuffix = nil;
 	[super dealloc];
 }
 
@@ -76,14 +78,12 @@
 }
 
 - (void)adjustImageForOrientation {
-    NSString *orientationSuffix = @"";
-    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation)) {
-        orientationSuffix = @"-landscape";
+    NSString *orientationAwareName = self.imageName;
+    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation) && 
+        self.landscapeImageNameSuffix && [self.landscapeImageNameSuffix length] > 0) {
+        orientationAwareName = [[[self.imageName stringByDeletingPathExtension] stringByAppendingString:self.landscapeImageNameSuffix] stringByAppendingPathExtension:[self.imageName pathExtension]];
     }
-    NSString *orientationAwareName = [NSString stringWithFormat:@"%@%@.%@",
-                              [self.imageName stringByDeletingPathExtension], orientationSuffix,
-                              [self.imageName pathExtension]];
-    [self assignImages:orientationAwareName];
+    [self assignImages:orientationAwareName selectedImageNameSuffix:self.selectedImageNameSuffix];
 }
 
 @end

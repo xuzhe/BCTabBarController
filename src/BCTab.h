@@ -1,11 +1,9 @@
 
 @interface BCTab : UIButton {
-	UIImage *background;
-	UIImage *rightBorder;
-    NSString *imageName;
+
 }
 
-- (id)initWithIconImageName:(NSString *)imageName;
+- (id)initWithIconImageName:(NSString *)_imageName selectedImageNameSuffix:(NSString *)_selectedSuffix landscapeImageNameSuffix:(NSString *)_landscapeSuffix;
 - (void)adjustImageForOrientation;
 
 @end

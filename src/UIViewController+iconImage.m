@@ -7,4 +7,12 @@
 	return nil;
 }
 
+- (NSString *)selectedIconImageNameSuffix {
+	return nil;
+}
+
+- (NSString *)landscapeIconImageNameSuffix {
+	return nil;
+}
+
 @end
