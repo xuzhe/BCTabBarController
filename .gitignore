@@ -12,4 +12,5 @@ profile
 beta
 
 # xcode 4 user data
-BCTabBarController.xcodeproj/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/
