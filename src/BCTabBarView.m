@@ -24,9 +24,14 @@
 - (void)layoutSubviews {
 	[super layoutSubviews];
 	CGRect f = contentView.frame;
-	f.size.height = self.bounds.size.height - self.tabBar.bounds.size.height;
+    if (self.tabBar.isInvisible) {
+        f.size.height = self.bounds.size.height;
+    } else {
+        f.size.height = self.bounds.size.height - self.tabBar.bounds.size.height;
+    }
 	contentView.frame = f;
-	[contentView layoutSubviews];
+	//[contentView layoutSubviews]; // this method should not be called directly!
+    [contentView setNeedsLayout];
 }
 
 - (void)drawRect:(CGRect)rect {

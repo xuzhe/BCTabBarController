@@ -9,7 +9,7 @@
 @end
 
 @implementation BCTabBar
-@synthesize tabs, selectedTab, backgroundImage, arrow, delegate;
+@synthesize tabs, selectedTab, backgroundImage, arrow, delegate, isInvisible;
 
 - (id)initWithFrame:(CGRect)aFrame {
 

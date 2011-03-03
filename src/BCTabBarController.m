@@ -4,6 +4,8 @@
 #import "UIViewController+iconImage.h"
 #import "BCTabBarView.h"
 
+#define kUINavigationControllerPushPopAnimationDuration     0.35
+
 @interface BCTabBarController ()
 
 - (void)loadTabs;
@@ -101,6 +103,9 @@
 - (void)loadTabs {
 	NSMutableArray *tabs = [NSMutableArray arrayWithCapacity:self.viewControllers.count];
 	for (UIViewController *vc in self.viewControllers) {
+        if ([[vc class] isSubclassOfClass:[UINavigationController class]]) {
+            ((UINavigationController *)vc).delegate = self;
+        }
         [tabs addObject:[[[BCTab alloc] initWithIconImageName:[vc iconImageName] selectedImageNameSuffix:[vc selectedIconImageNameSuffix] landscapeImageNameSuffix:[vc landscapeIconImageNameSuffix]] autorelease]];
 	}
 	self.tabBar.tabs = tabs;
@@ -163,5 +168,61 @@
 	[self.selectedViewController didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     [self adjustTabsToOrientation];
 }
+
+- (void)hideTabBar:(BOOL)animated {
+    if (tabBar.isInvisible) {
+        return;
+    }
+    tabBar.isInvisible = YES;
+	CGRect f = self.tabBarView.contentView.frame;
+    f.size.height = self.tabBarView.bounds.size.height;
+	self.tabBarView.contentView.frame = f;
+    
+    NSTimeInterval duration = 0.0;
+    if (animated) {
+        duration = kUINavigationControllerPushPopAnimationDuration;
+    }
+    self.tabBar.transform = CGAffineTransformIdentity;
+    [UIView animateWithDuration:duration
+                     animations:^{self.tabBar.transform = CGAffineTransformMakeTranslation(0.0, self.tabBar.bounds.size.height);}
+                     completion:^(BOOL finished){
+                         self.tabBar.hidden = YES;
+                         self.tabBar.transform = CGAffineTransformIdentity;
+                     }];
+    [self.tabBarView setNeedsLayout];
+}
+
+- (void)showTabBar:(BOOL)animated {
+    if (!tabBar.isInvisible) {
+        return;
+    }
+    
+    NSTimeInterval duration = 0.0;
+    if (animated) {
+        duration = kUINavigationControllerPushPopAnimationDuration;
+    }
+    tabBar.isInvisible = NO;
+    self.tabBar.transform = CGAffineTransformMakeTranslation(0.0, self.tabBar.bounds.size.height);
+    self.tabBar.hidden = NO;
+    [UIView animateWithDuration:duration
+                     animations:^{self.tabBar.transform = CGAffineTransformIdentity;}
+                     completion:^(BOOL finished){}];
+    [self.tabBarView setNeedsLayout];
+}
+
+#pragma - UINavigationControllerDelegate
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    if (viewController.hidesBottomBarWhenPushed) {
+        [self hideTabBar:animated];
+    } else {
+        [self showTabBar:animated];
+    }
+}
+
+/*
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    
+}
+*/
 
 @end

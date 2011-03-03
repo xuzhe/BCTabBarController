@@ -17,6 +17,7 @@
 @property (nonatomic, retain) BCTab *selectedTab;
 @property (nonatomic, assign) id <BCTabBarDelegate> delegate;
 @property (nonatomic, retain) UIImageView *arrow;
+@property (nonatomic, assign) BOOL isInvisible;
 @end
 
 @protocol BCTabBarDelegate

@@ -1,7 +1,8 @@
 #import "BCTabBar.h"
+
 @class BCTabBarView;
 
-@interface BCTabBarController : UIViewController <BCTabBarDelegate> {
+@interface BCTabBarController : UIViewController <BCTabBarDelegate, UINavigationControllerDelegate> {
 	NSArray *viewControllers;
 	UIViewController *selectedViewController;
 	BCTabBar *tabBar;
