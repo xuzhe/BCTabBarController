@@ -169,7 +169,7 @@
     [self adjustTabsToOrientation];
 }
 
-- (void)hideTabBar:(BOOL)animated {
+- (void)hideTabBar:(BOOL)animated isPush:(BOOL)isPush {
     if (tabBar.isInvisible) {
         return;
     }
@@ -182,9 +182,13 @@
     if (animated) {
         duration = kUINavigationControllerPushPopAnimationDuration;
     }
+    CGFloat magicNumber = - 1.0;
+    if (!isPush) {
+        magicNumber = 2.0;
+    }
     self.tabBar.transform = CGAffineTransformIdentity;
     [UIView animateWithDuration:duration
-                     animations:^{self.tabBar.transform = CGAffineTransformMakeTranslation(0.0, self.tabBar.bounds.size.height);}
+                     animations:^{self.tabBar.transform = CGAffineTransformMakeTranslation(self.tabBar.bounds.size.width * magicNumber, 0.0);}
                      completion:^(BOOL finished){
                          self.tabBar.hidden = YES;
                          self.tabBar.transform = CGAffineTransformIdentity;
@@ -192,7 +196,7 @@
     [self.tabBarView setNeedsLayout];
 }
 
-- (void)showTabBar:(BOOL)animated {
+- (void)showTabBar:(BOOL)animated isPush:(BOOL)isPush {
     if (!tabBar.isInvisible) {
         return;
     }
@@ -201,21 +205,30 @@
     if (animated) {
         duration = kUINavigationControllerPushPopAnimationDuration;
     }
-    tabBar.isInvisible = NO;
-    self.tabBar.transform = CGAffineTransformMakeTranslation(0.0, self.tabBar.bounds.size.height);
+    CGFloat magicNumber = 2.0;
+    if (!isPush) {
+        magicNumber = - 1.0;
+    }
+    self.tabBar.transform = CGAffineTransformMakeTranslation(self.tabBar.bounds.size.width * magicNumber, 0.0);
     self.tabBar.hidden = NO;
     [UIView animateWithDuration:duration
                      animations:^{self.tabBar.transform = CGAffineTransformIdentity;}
-                     completion:^(BOOL finished){}];
-    [self.tabBarView setNeedsLayout];
+                     completion:^(BOOL finished){
+                         tabBar.isInvisible = NO;
+                         [self.tabBarView setNeedsLayout];
+                     }];
 }
 
 #pragma - UINavigationControllerDelegate
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    BOOL isPush = YES;
+    if ([navigationController.navigationBar.items count] > [navigationController.viewControllers count]) {
+        isPush = NO;
+    }
     if (viewController.hidesBottomBarWhenPushed) {
-        [self hideTabBar:animated];
+        [self hideTabBar:animated isPush:isPush];
     } else {
-        [self showTabBar:animated];
+        [self showTabBar:animated isPush:isPush];
     }
 }
 
