@@ -222,8 +222,16 @@
 #pragma - UINavigationControllerDelegate
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     BOOL isPush = YES;
-    if ([navigationController.navigationBar.items count] > [navigationController.viewControllers count]) {
-        isPush = NO;
+    UINavigationItem *newTopItem = navigationController.topViewController.navigationItem;
+    if ([newTopItem isEqual:navigationController.navigationBar.topItem]) {
+        // nothing happend.
+        return;
+    } else {
+        for (UINavigationItem *item in navigationController.navigationBar.items) {
+            if ([item isEqual:newTopItem]) {
+                isPush = NO;
+            }
+        }
     }
     if (viewController.hidesBottomBarWhenPushed) {
         [self hideTabBar:animated isPush:isPush];
