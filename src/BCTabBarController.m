@@ -39,7 +39,7 @@
 - (void)tabBar:(BCTabBar *)aTabBar didSelectTabAtIndex:(NSInteger)index {
 	UIViewController *vc = [self.viewControllers objectAtIndex:index];
 	if (self.selectedViewController == vc) {
-		if ([self.selectedViewController isKindOfClass:[UINavigationController class]]) {
+		if ([[self.selectedViewController class] isSubclassOfClass:[UINavigationController class]]) {
 			[(UINavigationController *)self.selectedViewController popToRootViewControllerAnimated:YES];
 		}
 	} else {
@@ -224,12 +224,13 @@
     BOOL isPush = YES;
     UINavigationItem *newTopItem = navigationController.topViewController.navigationItem;
     if ([newTopItem isEqual:navigationController.navigationBar.topItem]) {
-        // nothing happend.
+        // nothing happened.
         return;
     } else {
         for (UINavigationItem *item in navigationController.navigationBar.items) {
             if ([item isEqual:newTopItem]) {
                 isPush = NO;
+                break;
             }
         }
     }
