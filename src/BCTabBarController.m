@@ -223,8 +223,9 @@
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     BOOL isPush = YES;
     UINavigationItem *newTopItem = navigationController.topViewController.navigationItem;
-    if ([newTopItem isEqual:navigationController.navigationBar.topItem]) {
-        animated = NO;
+    if ([newTopItem isEqual:navigationController.navigationBar.topItem] && !animated) {
+        // do nothing;
+        return;
     } else {
         for (UINavigationItem *item in navigationController.navigationBar.items) {
             if ([item isEqual:newTopItem]) {
