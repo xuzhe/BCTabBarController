@@ -224,8 +224,7 @@
     BOOL isPush = YES;
     UINavigationItem *newTopItem = navigationController.topViewController.navigationItem;
     if ([newTopItem isEqual:navigationController.navigationBar.topItem]) {
-        // nothing happened.
-        return;
+        animated = NO;
     } else {
         for (UINavigationItem *item in navigationController.navigationBar.items) {
             if ([item isEqual:newTopItem]) {
