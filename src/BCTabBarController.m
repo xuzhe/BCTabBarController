@@ -55,6 +55,7 @@
 		selectedViewController = [vc retain];
 		if (visible) {
 			[oldVC viewWillDisappear:NO];
+            [selectedViewController view];  // let the view load itself, in case the view is didUnload
 			[selectedViewController viewWillAppear:NO];
 		}
 		self.tabBarView.contentView = vc.view;
@@ -69,6 +70,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
+    [self.selectedViewController view];  // let the view load itself, in case the view is didUnload
 	[self.selectedViewController viewWillAppear:animated];
 }
 
@@ -121,6 +123,7 @@
 - (void)viewDidUnload {
 	self.tabBar = nil;
 	self.selectedTab = nil;
+    [super viewDidUnload];
 }
 
 - (void)setViewControllers:(NSArray *)array {
