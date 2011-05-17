@@ -351,7 +351,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = src/base/prefix.pch;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = BCTabBarController;
 			};
@@ -365,8 +364,7 @@
 				DSTROOT = /tmp/BCTabBarController.dst;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = BCTabBarController_Prefix.pch;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_PREFIX_HEADER = src/base/prefix.pch;
 				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = BCTabBarController;
 			};
