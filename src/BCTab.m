@@ -50,9 +50,9 @@
 		[background drawAtPoint:CGPointMake(0, 2)];
 		[rightBorder drawAtPoint:CGPointMake(self.bounds.size.width - rightBorder.size.width, 2)];
 		CGContextRef c = UIGraphicsGetCurrentContext();
-		[RGBCOLOR(24, 24, 24) set]; 
+		[[UIColor colorWithRed:24.0/255.0 green:24.0/255.0 blue:24.0/255.0 alpha:1.0] set];
 		CGContextFillRect(c, CGRectMake(0, self.bounds.size.height / 2, self.bounds.size.width, self.bounds.size.height / 2));
-		[RGBCOLOR(14, 14, 14) set];		
+		[[UIColor colorWithRed:14.0/255.0 green:14.0/255.0 blue:14.0/255.0 alpha:1.0] set];
 		CGContextFillRect(c, CGRectMake(0, self.bounds.size.height / 2, 0.5, self.bounds.size.height / 2));
 		CGContextFillRect(c, CGRectMake(self.bounds.size.width - 0.5, self.bounds.size.height / 2, 0.5, self.bounds.size.height / 2));
 	}

@@ -36,7 +36,7 @@
 
 - (void)drawRect:(CGRect)rect {
 	CGContextRef c = UIGraphicsGetCurrentContext();
-	[RGBCOLOR(230, 230, 230) set];
+	[[UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha:1.0] set];
 	CGContextFillRect(c, self.bounds);
 }
 
