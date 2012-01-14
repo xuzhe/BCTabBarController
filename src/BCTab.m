@@ -32,15 +32,6 @@
 	return self;
 }
 
-- (void)dealloc {
-	self.rightBorder = nil;
-	self.background = nil;
-    self.imageName = nil;
-    self.selectedImageNameSuffix = nil;
-    self.landscapeImageNameSuffix = nil;
-	[super dealloc];
-}
-
 - (void)setHighlighted:(BOOL)aBool {
 	// no highlight state
 }
