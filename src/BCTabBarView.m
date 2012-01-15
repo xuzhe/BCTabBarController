@@ -5,17 +5,17 @@
 @synthesize tabBar, contentView;
 
 - (void)setTabBar:(BCTabBar *)aTabBar {
-	[tabBar removeFromSuperview];
-	[tabBar release];
-	tabBar = aTabBar;
-	[self addSubview:tabBar];
+    if (tabBar != aTabBar) {
+        [tabBar removeFromSuperview];
+        tabBar = aTabBar;
+        [self addSubview:tabBar];
+    }
 }
 
 - (void)setContentView:(UIView *)aContentView {
 	[contentView removeFromSuperview];
 	contentView = aContentView;
-	contentView.frame = CGRectMake(0, 0, self.bounds.size.width, 
-										self.bounds.size.height - self.tabBar.bounds.size.height);
+	contentView.frame = CGRectMake(0, 0, self.bounds.size.width, self.tabBar.frame.origin.y);
 
 	[self addSubview:contentView];
 	[self sendSubviewToBack:contentView];

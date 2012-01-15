@@ -8,11 +8,11 @@
 }
 
 - (NSString *)selectedIconImageNameSuffix {
-	return nil;
+	return @"-selected";
 }
 
 - (NSString *)landscapeIconImageNameSuffix {
-	return nil;
+	return @"";
 }
 
 @end
