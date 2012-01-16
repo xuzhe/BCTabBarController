@@ -3,7 +3,7 @@
 #define kTabMargin 2.0
 
 @interface BCTabBar ()
-@property (nonatomic, retain) UIImage *backgroundImage;
+@property (nonatomic, strong) UIImage *backgroundImage;
 
 - (void)positionArrowAnimated:(BOOL)animated;
 @end

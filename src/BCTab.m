@@ -1,11 +1,11 @@
 #import "BCTab.h"
 
 @interface BCTab ()
-@property (nonatomic, retain) UIImage *rightBorder;
-@property (nonatomic, retain) UIImage *background;
-@property (nonatomic, retain) NSString *imageName;
-@property (nonatomic, retain) NSString *selectedImageNameSuffix;
-@property (nonatomic, retain) NSString *landscapeImageNameSuffix;
+@property (nonatomic, strong) UIImage *rightBorder;
+@property (nonatomic, strong) UIImage *background;
+@property (nonatomic, strong) NSString *imageName;
+@property (nonatomic, strong) NSString *selectedImageNameSuffix;
+@property (nonatomic, strong) NSString *landscapeImageNameSuffix;
 @end
 
 @implementation BCTab

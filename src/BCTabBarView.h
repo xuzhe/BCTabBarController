@@ -2,8 +2,8 @@
 
 @interface BCTabBarView : UIView
 
-@property (nonatomic, assign) UIView *contentView;
-@property (nonatomic, assign) BCTabBar *tabBar;
+@property (nonatomic, unsafe_unretained) UIView *contentView;
+@property (nonatomic, unsafe_unretained) BCTabBar *tabBar;
 
 
 @end

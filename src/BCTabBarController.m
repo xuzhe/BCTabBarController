@@ -10,7 +10,7 @@
 
 - (void)loadTabs;
 
-@property (nonatomic, retain) UIImageView *selectedTab;
+@property (nonatomic, strong) UIImageView *selectedTab;
 @property (nonatomic, readwrite) BOOL visible;
 
 @end
