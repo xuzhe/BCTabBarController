@@ -5,6 +5,7 @@
 #import "BCTabBarView.h"
 
 #define kUINavigationControllerPushPopAnimationDuration     0.35
+#define kChildViewControllers   ([[[UIDevice currentDevice] systemVersion] compare:@"5.0" options:NSNumericSearch] != NSOrderedAscending ? self.childViewControllers : nil)
 
 @interface BCTabBarController ()
 
@@ -53,13 +54,13 @@
 	UIViewController *oldVC = selectedViewController;
 	if (selectedViewController != vc) {
 		selectedViewController = vc;
-        if (!self.childViewControllers && visible) {
+        if (!kChildViewControllers && visible) {
 			[oldVC viewWillDisappear:NO];
             [selectedViewController view];  // let the view load itself, in case the view is didUnload
 			[selectedViewController viewWillAppear:NO];
 		}
 		self.tabBarView.contentView = vc.view;
-        if (!self.childViewControllers && visible) {
+        if (!kChildViewControllers && visible) {
 			[oldVC viewDidDisappear:NO];
 			[selectedViewController viewDidAppear:NO];
 		}
@@ -71,7 +72,7 @@
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 
-    if (!self.childViewControllers) {
+    if (!kChildViewControllers) {
         [self.selectedViewController view];  // let the view load itself, in case the view is didUnload
         [self.selectedViewController viewWillAppear:animated];
     }
@@ -80,7 +81,7 @@
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
     
-    if (!self.childViewControllers)
+    if (!kChildViewControllers)
         [self.selectedViewController viewDidAppear:animated];
     
 	visible = YES;
@@ -89,7 +90,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
 	[super viewWillDisappear:animated];
     
-    if (!self.childViewControllers)
+    if (!kChildViewControllers)
         [self.selectedViewController viewWillDisappear:animated];	
 }
 
